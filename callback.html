@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>
+
+    call back
+</title>
+<body>
+    <script>
+
+        const getIds = new Promise((resolve, reject)=>{
+            setTimeout(()=>{
+                const downloadSuccessfull = true;
+                const recipeId = [83938, 73838, 7638];
+                if(downloadSuccessfull){
+                    resolve(recipeId);
+                }else{
+                    reject('download failed 404');
+                }
+            }, 1500);
+        });
+
+        const getRecipe = recID => {
+            return new Promise((resolve, reject)=>{
+                setTimeout(id => {
+                    const downloadSuccessfull = true;
+                    if (downloadSuccessfull){
+                        const recipe = {title:'Fresh Apple Juice', publisher:'Suru'};
+                        resolve(`${id}: ${recipe.title}`);
+                    }else{
+                        reject(`${id}: recipe download failed 404`);
+                    }
+
+                }, 1500, recID)
+            })
+        }
+
+        async function getRecipesAw(){
+            const IDs = await getIds;
+            console.log(IDs);
+            const recipe = await getRecipe(IDs[2]);
+            console.log(recipe);
+        }
+
+        getRecipesAw();
+    </script>
+</body>
+</html>
+
